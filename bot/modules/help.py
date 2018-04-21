@@ -22,19 +22,19 @@ short_help_markup = InlineKeyboardMarkup([
 def help_message(bot, update):
 	logger.info("/help or /start command")
 	update.message.reply_markdown(s.help_short,
-		reply_markup=extended_help_markup)
+		reply_markup=extended_help_markup, disable_web_page_preview=True)
 
 @run_async
 def on_extended_help_button(bot, update):
 	logger.info("extend help")
 	update.callback_query.message.edit_text(s.help_extended,
-		reply_markup=short_help_markup, parse_mode=ParseMode.MARKDOWN)
+		reply_markup=short_help_markup, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
 
 @run_async
 def on_short_help_button(bot, update):
 	logger.info("reduce help")
 	update.callback_query.message.edit_text(s.help_short,
-		reply_markup=extended_help_markup, parse_mode=ParseMode.MARKDOWN)
+		reply_markup=extended_help_markup, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
 
 class module:
 	name = "help"

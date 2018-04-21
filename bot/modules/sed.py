@@ -51,7 +51,7 @@ def on_sed(bot, update, groups):
 		if len(new_string) > MAX_MESSAGE_LENGTH:
 			logger.info("result too long: substringing...")
 			new_string = new_string[:MAX_MESSAGE_LENGTH-16] # -16: "*Did you mean:*\n"
-		update.message.reply_to_message.reply_html(get_response(mode, new_string))
+		update.message.reply_to_message.reply_html(get_response(mode, new_string), disable_web_page_preview=True)
 		if mode.endswith("/"): # try to delete the command
 			try:
 				update.message.delete()
