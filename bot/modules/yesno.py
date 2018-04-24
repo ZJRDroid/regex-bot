@@ -1,3 +1,4 @@
+import re
 import logging
 from random import choice
 from telegram.ext.dispatcher import run_async
@@ -7,7 +8,7 @@ from bot import strings as s
 
 logger = logging.getLogger(__name__)
 
-YESNO_REGEX = r".*(?:y(?:es)?\/no?|no?\/y(?:es)?)$"
+YESNO_REGEX = re.compile(r".*(?:y(?:es)?\/no?|no?\/y(?:es)?)$", re.I)
 
 @run_async
 def on_yesno(bot, update):
