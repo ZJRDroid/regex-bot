@@ -12,12 +12,12 @@ YESNO_REGEX = re.compile(r".*(?:y(?:es)?\/no?|no?\/y(?:es)?)$", re.I)
 
 @run_async
 def on_yesno(bot, update):
-	logger.info("yes/no")
-	reply = choice(s.yesno_list)
-	update.message.reply_text(reply)
+    logger.info("yes/no")
+    reply = choice(s.yesno_list)
+    update.message.reply_text(reply)
 
 class module:
-	name = "yesno"
-	handlers = (
-		RegexHandler(YESNO_REGEX, on_yesno),
-	)
+    name = "yesno"
+    handlers = (
+        RegexHandler(YESNO_REGEX, on_yesno),
+    )

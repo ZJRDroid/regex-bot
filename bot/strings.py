@@ -41,8 +41,8 @@ The code monkeys at our headquarters are working VEWY HAWD to fix this!\
 """
 
 yesno_list = (
-	'Yes.',
-	'No.',
-	'Absolutely.',
-	'In your dreams.'
+    'Yes.',
+    'No.',
+    'Absolutely.',
+    'In your dreams.'
 )
