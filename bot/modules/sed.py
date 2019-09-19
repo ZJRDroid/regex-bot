@@ -27,9 +27,10 @@ def on_sed(_, update, groups):
     text = update.message.reply_to_message.text or update.message.reply_to_message.caption
     mode = groups[0]
     pattern = groups[1]
-    replacement = groups[2].replace('\\/', '/') # ??? https://github.com/SijmenSchoon/regexbot/blob/master/regexbot.py#L25
+    replacement = groups[2].replace('\\/', '/')  # ??? https://github.com/SijmenSchoon/regexbot/blob/master/regexbot.py#L25
     flags = groups[3] if len(groups) > 3 else None
-    logger.info("\nmode: %s\ntext: %s\npattern: %s\nreplacement: %s\nflags: %s",
+    logger.info(
+        "\nmode: %s\ntext: %s\npattern: %s\nreplacement: %s\nflags: %s",
         mode,
         text,
         pattern,
@@ -44,7 +45,7 @@ def on_sed(_, update, groups):
         logger.info("re.subn result:\nnew_string: %s\nn_subs: %d", new_string, n_subs)
     except Exception as e:
         logger.info("re.subn exception: %s", str(e), exc_info=True)
-        #update.message.reply_text(s.oopsie_woopsie) # might be the user who fucked up the regex
+        # update.message.reply_text(s.oopsie_woopsie) # might be the user who fucked up the regex
         return  # don't proceed further
 
     if n_subs > 0:
@@ -62,6 +63,5 @@ def on_sed(_, update, groups):
 class module:
     name = "sed"
     handlers = (
-        FilteredRegexHandler(COMMAND_REGEX, on_sed, pass_groups=True,
-            filters=Filters.reply_text),
+        FilteredRegexHandler(COMMAND_REGEX, on_sed, pass_groups=True, filters=Filters.reply_text),
     )
