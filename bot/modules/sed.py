@@ -1,12 +1,12 @@
 import logging
 from html import escape as html_escape
-from telegram.ext.dispatcher import run_async
+
 from telegram.error import BadRequest
 from telegram.constants import MAX_MESSAGE_LENGTH
+
 from bot.customfilters import Filters
 from bot.regexer import Regex
 from bot.filteredregexhandler import FilteredRegexHandler
-from bot import strings as s
 
 logger = logging.getLogger(__name__)
 
@@ -17,13 +17,13 @@ MODES = {
     "*": "*{}"
 }
 
+
 def get_response(mode, string):
     mode = mode.replace("/", "")
     return MODES[mode].format(html_escape(string))
 
-@run_async
-def on_sed(bot, update, groups):
 
+def on_sed(_, update, groups):
     text = update.message.reply_to_message.text or update.message.reply_to_message.caption
     mode = groups[0]
     pattern = groups[1]
@@ -45,18 +45,19 @@ def on_sed(bot, update, groups):
     except Exception as e:
         logger.info("re.subn exception: %s", str(e), exc_info=True)
         #update.message.reply_text(s.oopsie_woopsie) # might be the user who fucked up the regex
-        return # don't proceed further
+        return  # don't proceed further
 
     if n_subs > 0:
         if len(new_string) > MAX_MESSAGE_LENGTH:
             logger.info("result too long: substringing...")
-            new_string = new_string[:MAX_MESSAGE_LENGTH-16] # -16: "*Did you mean:*\n"
+            new_string = new_string[:MAX_MESSAGE_LENGTH-16]  # -16: "*Did you mean:*\n"
         update.message.reply_to_message.reply_html(get_response(mode, new_string), disable_web_page_preview=True)
-        if mode.endswith("/"): # try to delete the command
+        if mode.endswith("/"):  # try to delete the command
             try:
                 update.message.delete()
-            except BadRequest as e: # the bot doesn't have the permission to delete the message
+            except BadRequest as e:  # the bot doesn't have the permission to delete the message
                 logger.info("exception while trying to delete a message: %s", e)
+
 
 class module:
     name = "sed"

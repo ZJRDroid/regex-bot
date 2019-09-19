@@ -1,10 +1,13 @@
 import re
+
 from telegram import Update
 from telegram.ext import RegexHandler
+
 
 class FilteredRegexHandler(RegexHandler):
     def __init__(self, *args, **kwargs):
         self.filters = kwargs.pop("filters")
+
         RegexHandler.__init__(self, *args, **kwargs)
     
     def check_update(self, update):
@@ -25,4 +28,5 @@ class FilteredRegexHandler(RegexHandler):
                 update.effective_message.text:
             match = re.match(self.pattern, update.effective_message.text)
             return bool(match)
+
         return False
